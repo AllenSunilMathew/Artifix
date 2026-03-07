@@ -9,8 +9,9 @@ export const useAuth = () => {
   return ctx;
 };
 
-// Configure axios base
-axios.defaults.baseURL = 'http://localhost:5000';
+// Configure axios base - dynamic for production
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+axios.defaults.baseURL = API_BASE_URL;
 
 const setAxiosToken = (token) => {
   if (token) axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
