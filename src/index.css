@@ -137,6 +137,29 @@ body {
 .input:disabled { opacity: 0.5; cursor: not-allowed; }
 select.input option { background: #0f172a; color: #f1f5f9; }
 
+/* ── Input Dark (Admin Add Staff) ────────────────────────────────────────── */
+.input-dark {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: #000000;
+  font-size: 0.875rem;
+  font-family: 'Outfit', sans-serif;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.input-dark:focus { 
+  border-color: #0ea5e9; 
+  box-shadow: 0 0 0 3px rgba(14,165,233,0.15);
+  transform: scale(1.02);
+  background: #ffffff;
+}
+.input-dark::placeholder { color: #000000; }
+.input-dark:disabled { opacity: 0.5; cursor: not-allowed; }
+
+
 /* ── Badges ────────────────────────────────────────────────────────────────── */
 .badge {
   display: inline-flex;
