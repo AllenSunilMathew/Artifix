@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { QRCodeSVG } from 'qrcode.react';
 import jsPDF from 'jspdf';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
-import AIChatbot from '../components/AIChatbot';
 
 const API = 'http://localhost:5000';
 
@@ -25,8 +23,6 @@ export default function PatientDashboard() {
   const [labTests, setLabTests] = useState([]);
   const [prescriptions, setPrescriptions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [chatOpen, setChatOpen] = useState(false);
-  const [qrAppt, setQrAppt] = useState(null);
   const [profileForm, setProfileForm] = useState({
     name: user?.name || '', phone: user?.phone || '', address: user?.address || '',
     gender: user?.gender || '', bloodGroup: user?.bloodGroup || '',
@@ -243,7 +239,7 @@ export default function PatientDashboard() {
         <div className="space-y-3">
           {appointments.length === 0 ? (
             <div className="glass-card p-16 text-center">
-              <p className="text-5xl mb-4"></p>
+              <p className="text-5xl mb-4">📅</p>
               <p className="text-white font-bold text-lg mb-2">No appointments yet</p>
               <p className="text-slate-400 text-sm mb-6">Book your first appointment with a specialist</p>
               <Link to="/book-appointment" className="btn btn-primary">Book Appointment</Link>
@@ -268,21 +264,13 @@ export default function PatientDashboard() {
                 </div>
                 <StatusBadge status={a.status} />
                 {a.status === 'confirmed' && (
-                  <>
-                    <button
-                      onClick={() => setQrAppt(a)}
-                      className="btn btn-ghost btn-sm"
-                    >
-                      📱 QR Code
-                    </button>
-                    <button
-                      onClick={() => cancelAppointment(a._id)}
-                      className="btn btn-sm"
-                      style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', color: '#f87171' }}
-                    >
-                      Cancel
-                    </button>
-                  </>
+                  <button
+                    onClick={() => cancelAppointment(a._id)}
+                    className="btn btn-sm"
+                    style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', color: '#f87171' }}
+                  >
+                    Cancel
+                  </button>
                 )}
               </div>
             </div>
@@ -449,69 +437,7 @@ export default function PatientDashboard() {
           </div>
         </div>
       )}
-
-      {/* QR Modal */}
-      {qrAppt && (
-        <div className="modal-overlay" onClick={() => setQrAppt(null)}>
-          <div className="modal-box max-w-sm" onClick={(e) => e.stopPropagation()}>
-            <div className="flex justify-between items-center mb-5">
-              <h3 className="text-white font-bold text-lg">Appointment QR Code</h3>
-              <button onClick={() => setQrAppt(null)} className="text-slate-400 hover:text-white">✕</button>
-            </div>
-            <div className="flex justify-center mb-5 p-4 rounded-xl bg-white">
-              {qrAppt && qrAppt.tokenNumber ? (
-                <QRCodeSVG
-                  value={qrAppt.qrCode || JSON.stringify({ 
-                    token: qrAppt.tokenNumber || '', 
-                    patient: user?.name || 'Patient', 
-                    doctor: qrAppt.doctor?.name || 'Doctor', 
-                    date: qrAppt.appointmentDate || '', 
-                    time: qrAppt.appointmentTime || ''
-                  })}
-                  size={200}
-                  level="M"
-                  includeMargin={true}
-                  bgColor="#ffffff"
-                  fgColor="#000000"
-                />
-              ) : (
-                <div className="text-slate-500 text-sm">No appointment data available</div>
-              )}
-            </div>
-            <div className="space-y-2.5">
-              {[
-                ['Token Number', `#${qrAppt.tokenNumber}`],
-                ['Doctor', `Dr. ${qrAppt.doctor?.name}`],
-                ['Specialization', qrAppt.doctor?.specialization],
-                ['Date', new Date(qrAppt.appointmentDate).toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })],
-                ['Time', qrAppt.appointmentTime],
-              ].map(([k, v]) => (
-                <div key={k} className="flex justify-between text-sm">
-                  <span className="text-slate-500">{k}</span>
-                  <span className={k === 'Token Number' ? 'text-sky-400 font-bold text-base' : 'text-white font-medium'}>{v}</span>
-                </div>
-              ))}
-            </div>
-            <p className="text-slate-500 text-xs text-center mt-5 leading-relaxed">
-              📱 Show this QR code at reception upon arrival.<br />
-              Must arrive within <strong className="text-yellow-400">30 minutes</strong> of appointment time.
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* AI Chatbot button */}
-      {!chatOpen && (
-        <button
-          onClick={() => setChatOpen(true)}
-          className="fixed bottom-6 right-6 w-14 h-14 rounded-full flex items-center justify-center text-2xl z-40 transition-all hover:scale-110 shadow-2xl"
-          style={{ background: 'linear-gradient(135deg, #0ea5e9, #10b981)', boxShadow: '0 8px 32px rgba(14,165,233,0.4)' }}
-          title="AI Health Assistant"
-        >
-          🤖
-        </button>
-      )}
-      {chatOpen && <AIChatbot onClose={() => setChatOpen(false)} />}
     </div>
   );
 }
+

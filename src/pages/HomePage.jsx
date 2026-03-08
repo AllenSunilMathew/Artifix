@@ -10,19 +10,19 @@ const STATS = [
 ];
 
 const SERVICES = [
-  { icon: '', title: 'Doctor Appointments', desc: 'Book with 25+ specialists. Get a unique token and QR code instantly.' },
+  { icon: '', title: 'Doctor Appointments', desc: 'Book with 25+ specialists. Get a unique token instantly.' },
   { icon: '', title: 'Lab Testing', desc: '10 categories, 30+ tests. Results downloadable as PDF.' },
   { icon: '', title: 'Digital Prescriptions', desc: 'Doctors add medicines, injections and follow-up schedules.' },
   { icon: '', title: 'AI Health Assistant', desc: 'Describe symptoms and get instant guidance any time.' },
-  { icon: '', title: 'QR Check-In', desc: 'Contactless arrival. Scan your QR at reception.' },
+  { icon: '', title: 'Easy Check-In', desc: 'Contactless arrival. Simply arrive at reception.' },
   { icon: '', title: 'Secure Records', desc: 'All health data encrypted and accessible only to you.' },
 ];
 
 const HOW = [
   { step: '01', title: 'Create Account', desc: 'Register as a patient in under 2 minutes.' },
   { step: '02', title: 'Book Service', desc: 'Pick a doctor or lab test with your preferred time.' },
-  { step: '03', title: 'Get Token & QR', desc: 'Your unique slot is reserved and confirmed instantly.' },
-  { step: '04', title: 'Arrive On Time', desc: 'Check in with your QR. Late arrivals forfeit their slot.' },
+  { step: '03', title: 'Get Token', desc: 'Your unique slot is reserved and confirmed instantly.' },
+  { step: '04', title: 'Arrive On Time', desc: 'Check in at reception. Late arrivals forfeit their slot.' },
 ];
 
 export default function HomePage() {
@@ -181,7 +181,7 @@ export default function HomePage() {
                   className="mt-3 p-2.5 rounded-xl text-center text-xs font-semibold"
                   style={{ background: 'rgba(14,165,233,0.06)', color: '#38bdf8', border: '1px solid rgba(14,165,233,0.12)' }}
                 >
-                  ✓ All appointments confirmed with QR codes
+                  ✓ All appointments confirmed with tokens
                 </div>
               </div>
             </div>
